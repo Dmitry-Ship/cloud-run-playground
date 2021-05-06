@@ -17,6 +17,7 @@ func main() {
 	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file")
 	}
+
 	http.Handle("/", http.FileServer(http.Dir("./static")))
 	http.HandleFunc("/api", handleAPI)
 
