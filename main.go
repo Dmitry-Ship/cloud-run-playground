@@ -5,8 +5,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-
-	"github.com/joho/godotenv"
 )
 
 func handleAPI(w http.ResponseWriter, r *http.Request) {
@@ -14,9 +12,9 @@ func handleAPI(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	// if err := godotenv.Load(); err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
 
 	http.Handle("/", http.FileServer(http.Dir("./static")))
 	http.HandleFunc("/api", handleAPI)
