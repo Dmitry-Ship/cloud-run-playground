@@ -2,13 +2,13 @@ FROM golang:1.15.2
 
 WORKDIR /app
 
-COPY go.mod .
+COPY go.* ./
 
 RUN go mod download
 
-COPY . .
+COPY . ./
 
-RUN go build -o main .
+RUN go build -v -o main
 
 ENV PORT=3000
 ENV HOST=localhost
