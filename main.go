@@ -1,14 +1,22 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 )
 
+type response struct {
+	data string
+}
+
 func handleAPI(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello World")
+	w.Header().Set("Content-Type", "application/json")
+
+	res := response{data: "Hello World"}
+	json.NewEncoder(w).Encode(res)
 }
 
 func main() {
