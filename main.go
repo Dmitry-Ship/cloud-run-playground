@@ -9,13 +9,13 @@ import (
 )
 
 type response struct {
-	data string
+	Data string
 }
 
 func handleAPI(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	res := response{data: "Hello World"}
+	res := response{Data: "Hello World"}
 	json.NewEncoder(w).Encode(res)
 }
 
