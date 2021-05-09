@@ -9,7 +9,7 @@ import (
 )
 
 type response struct {
-	Data string
+	Data string `json:"data"`
 }
 
 func handleAPI(w http.ResponseWriter, r *http.Request) {
