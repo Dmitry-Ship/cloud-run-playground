@@ -16,6 +16,7 @@ func handleAPI(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	res := response{Data: "Hello World"}
+
 	json.NewEncoder(w).Encode(res)
 }
 
