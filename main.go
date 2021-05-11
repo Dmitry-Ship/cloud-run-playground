@@ -29,7 +29,6 @@ func main() {
 	http.HandleFunc("/api", handleAPI)
 
 	port := os.Getenv("PORT")
-	host := os.Getenv("HOST")
-	fmt.Println("Listening to: http://" + host + ":" + port)
+	fmt.Println("Listening to port " + port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
