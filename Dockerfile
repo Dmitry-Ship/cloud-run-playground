@@ -10,8 +10,8 @@ COPY . ./
 
 RUN go build -v -o main
 
-ENV PORT=3000
-ENV HOST=localhost
+ENV PORT 3000
+ENV HOST 0.0.0.0
 
 EXPOSE 3000
 

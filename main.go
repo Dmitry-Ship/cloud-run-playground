@@ -29,6 +29,11 @@ func main() {
 	http.HandleFunc("/api", handleAPI)
 
 	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "3000"
+	}
+
 	fmt.Println("Listening to port " + port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
