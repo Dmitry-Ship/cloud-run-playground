@@ -1,3 +1,4 @@
+steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/go-playground-311723/docker-test:$SHORT_SHA', '.']
 - name: 'gcr.io/cloud-builders/docker'
