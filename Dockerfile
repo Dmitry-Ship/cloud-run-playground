@@ -23,3 +23,10 @@ RUN apk --no-cache add ca-certificates
 COPY --from=build /app .
 
 CMD ["./main"] 
+
+# stage 4: install dev dependencies 
+FROM base as dev
+
+RUN go get github.com/codegangsta/gin
+
+CMD ["gin" , "run", "main.go"]  
