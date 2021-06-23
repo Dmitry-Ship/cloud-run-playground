@@ -21,18 +21,10 @@ func handleAPI(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// if err := godotenv.Load(); err != nil {
-	// 	log.Fatal("Error loading .env file")
-	// }
-
 	http.Handle("/", http.FileServer(http.Dir("./static")))
 	http.HandleFunc("/api", handleAPI)
 
 	port := os.Getenv("PORT")
-
-	if port == "" {
-		port = "3000"
-	}
 
 	fmt.Println("Listening to port " + port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))

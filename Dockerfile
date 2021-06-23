@@ -1,18 +1,25 @@
-FROM golang:1.16.4
+# stage 1: install dependencies
+FROM golang:1.16.4-alpine AS base
 
 WORKDIR /app
 
-COPY go.* ./
+COPY go.mod go.sum ./
 
 RUN go mod download
 
-COPY . ./
+COPY . .
 
-RUN go build -v -o main
+# stage 2: build binary for production
+FROM base as build
 
-ENV PORT 3000
-ENV HOST 0.0.0.0
+RUN go build -v -o main .
 
-EXPOSE 3000
+ENV PORT=${PORT}
 
-CMD ["/app/main"]
+FROM alpine:latest as prod
+
+RUN apk --no-cache add ca-certificates
+
+COPY --from=build /app .
+
+CMD ["./main"] 
