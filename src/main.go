@@ -1,8 +1,8 @@
 package main
 
 import (
-	"Docker-Test/infrastructure"
-	"Docker-Test/users"
+	"cloud-run-playground/infrastructure"
+	"cloud-run-playground/users"
 	"fmt"
 	"log"
 	"net/http"
@@ -17,7 +17,6 @@ func main() {
 	users.HandleRequests(usersService)
 
 	port := os.Getenv("PORT")
-	fmt.Println("PORT " + port)
 
 	fmt.Println("Listening on port " + port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))

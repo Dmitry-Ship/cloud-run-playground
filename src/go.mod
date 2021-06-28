@@ -1,4 +1,4 @@
-module Docker-Test
+module cloud-run-playground
 
 go 1.16
 
