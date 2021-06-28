@@ -12,6 +12,14 @@ func (mr *MockRepo) GetAllUsers(limit int) ([]User, error) {
 	return []User{}, nil
 }
 
+func (mr *MockRepo) CreateUser(user User) (User, error) {
+	return user, nil
+}
+
+func (mr *MockRepo) GetUserById(id int) (User, error) {
+	return User{}, nil
+}
+
 var mockedRepository = &MockRepo{}
 var userService = NewService(mockedRepository)
 
