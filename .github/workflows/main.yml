@@ -9,6 +9,12 @@ env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   SERVICE: myservice
   REGION: us-central1
+  DB_PORT: ${{ secrets.DB_PORT }}
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+  CLOUDSQL_USER: ${{ secrets.DB_USER }}
+  CLOUDSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
 
 jobs:
   deploy:
@@ -29,8 +35,8 @@ jobs:
 
     - name: Build and Push Container
       run: |-
-        docker build --target prod -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }} .
-        docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
+        docker build --target prod -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }} ./src
+        docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
         
     - name: Deploy to Cloud Run
       id: deploy

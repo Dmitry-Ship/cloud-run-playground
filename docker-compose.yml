@@ -2,11 +2,40 @@ version: "3.8"
 
 services:
   app:
-    container_name: app
+    environment:
+      - PORT=${PORT}
+      - DB_PORT
+      - DB_HOST
+      - DB_NAME
+      - CLOUDSQL_USER
+      - CLOUDSQL_PASSWORD
+    container_name: myapp
     build:
-      context: ./
+      context: ./src
       target: dev
     ports:
       - ${PORT}:${PORT}
     volumes:
-      - ./:/app
+      - ./src:/app
+    depends_on:
+      - sql_proxy
+
+  sql_proxy:
+    environment:
+      - CLOUDSQL_CONNECTION_NAME
+      - CLOUDSQL_USER
+      - CLOUDSQL_PASSWORD
+    image: gcr.io/cloudsql-docker/gce-proxy:1.19.1
+    command:
+      - "/cloud_sql_proxy"
+      - "-dir=/cloudsql"
+      - "-instances=${CLOUDSQL_CONNECTION_NAME}"
+      - "-credential_file=/tmp/keys/keyfile.json"
+    # Allow the container to bind to the unix socket.
+    user: root
+    volumes:
+      - ${GCP_KEY_PATH}:/tmp/keys/keyfile.json:ro
+      # - cloudsql:/cloudsql
+volumes:
+  # This empty property initializes a named volume.
+  database:
