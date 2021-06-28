@@ -11,20 +11,20 @@ import (
 func GetDatabaseConnection() *gorm.DB {
 	port := os.Getenv("DB_PORT")
 	host := os.Getenv("DB_HOST")
-	user := os.Getenv("CLOUDSQL_USER")
+	user := os.Getenv("DB_USER")
 	dbname := os.Getenv("DB_NAME")
-	dbpassword := os.Getenv("CLOUDSQL_PASSWORD")
+	dbpassword := os.Getenv("DB_PASSWORD")
 
 	options := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s", host, port, user, dbname, dbpassword)
-	fmt.Println(options)
+
 	db, err := gorm.Open(postgres.Open(options), &gorm.Config{})
 	if err != nil {
 		panic("Could not connect to database")
 	}
-	fmt.Println(fmt.Sprintf("Connected to database %s", dbname))
+	fmt.Printf("Connected to database %s", dbname)
 
 	// Migrate the schema
-	// db.AutoMigrate(&books.Book{})
+	// db.AutoMigrate(&users.User{})
 
 	return db
 }
