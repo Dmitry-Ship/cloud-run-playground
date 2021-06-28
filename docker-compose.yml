@@ -7,8 +7,8 @@ services:
       - DB_PORT
       - DB_HOST
       - DB_NAME
-      - DB_USER
-      - DB_PASSWORD
+      - CLOUDSQL_USER
+      - CLOUDSQL_PASSWORD
     container_name: myapp
     build:
       context: ./src
@@ -23,8 +23,8 @@ services:
   sql_proxy:
     environment:
       - CLOUDSQL_CONNECTION_NAME
-      - DB_USER
-      - DB_PASSWORD
+      - CLOUDSQL_USER
+      - CLOUDSQL_PASSWORD
     image: gcr.io/cloudsql-docker/gce-proxy:1.19.1
     command:
       - "/cloud_sql_proxy"
