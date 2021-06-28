@@ -16,6 +16,7 @@ func GetDatabaseConnection() *gorm.DB {
 	dbpassword := os.Getenv("CLOUDSQL_PASSWORD")
 
 	options := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s", host, port, user, dbname, dbpassword)
+	fmt.Println(options)
 	db, err := gorm.Open(postgres.Open(options), &gorm.Config{})
 	if err != nil {
 		panic("Could not connect to database")
