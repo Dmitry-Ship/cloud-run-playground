@@ -17,6 +17,7 @@ func main() {
 	users.HandleRequests(usersService)
 
 	http.Handle("/", http.FileServer(http.Dir("./static")))
+
 	port := os.Getenv("PORT")
 	fmt.Println("PORT " + port)
 
