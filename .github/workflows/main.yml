@@ -9,12 +9,6 @@ env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   SERVICE: myservice
   REGION: us-central1
-  DB_PORT: ${{ secrets.DB_PORT }}
-  DB_HOST: ${{ secrets.DB_HOST }}
-  DB_NAME: ${{ secrets.DB_NAME }}
-  CLOUDSQL_USER: ${{ secrets.DB_USER }}
-  CLOUDSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
-
 
 jobs:
   deploy:
@@ -32,6 +26,11 @@ jobs:
 
     - name: Authorize Docker push
       run: gcloud auth configure-docker
+
+    - name: Run tests
+      run: |
+        cd src
+        go test ./...
 
     - name: Build and Push Container
       run: |-
