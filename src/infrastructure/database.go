@@ -11,9 +11,9 @@ import (
 func GetDatabaseConnection() *gorm.DB {
 	port := os.Getenv("DB_PORT")
 	host := os.Getenv("DB_HOST")
-	user := os.Getenv("DB_USER")
+	user := os.Getenv("CLOUDSQL_USER")
 	dbname := os.Getenv("DB_NAME")
-	dbpassword := os.Getenv("DB_PASSWORD")
+	dbpassword := os.Getenv("CLOUDSQL_PASSWORD")
 
 	options := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s", host, port, user, dbname, dbpassword)
 
