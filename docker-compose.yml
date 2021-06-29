@@ -9,7 +9,7 @@ services:
       - DB_NAME
       - DB_USER
       - DB_PASSWORD
-    container_name: myapp
+    container_name: cloud-run-api
     build:
       context: ./src
       target: dev
