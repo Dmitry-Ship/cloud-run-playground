@@ -4,4 +4,7 @@ tmp
 .vscode
 
 .git
+.gitignore
+.github
+
 **/*gin-bin

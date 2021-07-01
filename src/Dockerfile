@@ -25,7 +25,7 @@ FROM alpine:latest as prod
 
 RUN apk --no-cache add ca-certificates
 
-COPY --from=build /app .
+COPY --from=build /app/main .
 
 CMD ["./main"] 
 
