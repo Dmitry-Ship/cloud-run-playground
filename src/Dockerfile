@@ -9,17 +9,17 @@ RUN go mod download
 
 COPY . .
 
-# stage 2: build binary for production
-FROM base as build
-
-RUN go build -v -o main .
-
 ENV PORT=${PORT}
 ENV DB_PORT=${DB_PORT}
 ENV DB_HOST=${DB_HOST}
 ENV DB_NAME=${DB_NAME}
 ENV DB_USER=${DB_USER}
 ENV DB_PASSWORD=${DB_PASSWORD}
+
+# stage 2: build binary for production
+FROM base as build
+
+RUN go build -v -o main .
 
 FROM alpine:latest as prod
 
