@@ -1,6 +1,7 @@
-package users
+package rest
 
 import (
+	"cloud-run-playground/pkg/users"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -11,8 +12,8 @@ import (
 
 type MockService struct{}
 
-func (mr *MockService) GetAllUsers(limit int) ([]User, error) {
-	return []User{}, nil
+func (mr *MockService) GetAllUsers(limit int) ([]users.User, error) {
+	return []users.User{}, nil
 }
 
 var mockService = &MockService{}

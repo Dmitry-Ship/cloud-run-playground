@@ -1,6 +1,7 @@
 package main
 
 import (
+	"cloud-run-playground/pkg/rest"
 	"cloud-run-playground/pkg/storage"
 	"cloud-run-playground/pkg/users"
 	"fmt"
@@ -14,7 +15,7 @@ func main() {
 
 	usersRepository := users.NewUsersRepository(db)
 	usersService := users.NewService(usersRepository)
-	users.HandleRequests(usersService)
+	rest.HandleRequests(usersService)
 
 	port := os.Getenv("PORT")
 

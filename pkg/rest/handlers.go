@@ -1,15 +1,16 @@
-package users
+package rest
 
 import (
+	"cloud-run-playground/pkg/users"
 	"encoding/json"
 	"net/http"
 )
 
-func HandleRequests(usersService Service) {
+func HandleRequests(usersService users.Service) {
 	http.HandleFunc("/api/users", GetUsers(usersService))
 }
 
-func GetUsers(userService Service) func(w http.ResponseWriter, r *http.Request) {
+func GetUsers(userService users.Service) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != "GET" {
 			w.WriteHeader(http.StatusMethodNotAllowed)
