@@ -15,7 +15,6 @@ func GetUsers(userService Service) func(w http.ResponseWriter, r *http.Request) 
 			w.WriteHeader(http.StatusMethodNotAllowed)
 			return
 		}
-
 		result, err := userService.GetAllUsers(50)
 
 		if err != nil {
