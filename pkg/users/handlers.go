@@ -1,7 +1,7 @@
 package users
 
 import (
-	"cloud-run-playground/common"
+	"encoding/json"
 	"net/http"
 )
 
@@ -11,6 +11,11 @@ func HandleRequests(usersService Service) {
 
 func GetUsers(userService Service) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != "GET" {
+			w.WriteHeader(http.StatusMethodNotAllowed)
+			return
+		}
+
 		result, err := userService.GetAllUsers(50)
 
 		if err != nil {
@@ -18,6 +23,8 @@ func GetUsers(userService Service) func(w http.ResponseWriter, r *http.Request) 
 			return
 		}
 
-		common.SendJSONresponse(result, w)
+		w.Header().Set("Content-Type", "application/json")
+
+		json.NewEncoder(w).Encode(result)
 	}
 }

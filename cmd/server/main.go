@@ -1,8 +1,8 @@
 package main
 
 import (
-	"cloud-run-playground/infrastructure"
-	"cloud-run-playground/users"
+	"cloud-run-playground/pkg/storage"
+	"cloud-run-playground/pkg/users"
 	"fmt"
 	"log"
 	"net/http"
@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	db := infrastructure.GetDatabaseConnection()
+	db := storage.GetDatabaseConnection()
 
 	usersRepository := users.NewUsersRepository(db)
 	usersService := users.NewService(usersRepository)

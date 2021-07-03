@@ -17,6 +17,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Run tests
+      run: go test ./...
+
     - name: Setup Cloud SDK
       uses: google-github-actions/setup-gcloud@v0.2.0
       with:
@@ -27,14 +30,9 @@ jobs:
     - name: Authorize Docker push
       run: gcloud auth configure-docker
 
-    - name: Run tests
-      run: |
-        cd src
-        go test ./...
-
     - name: Build and Push Container
       run: |-
-        docker build --target prod -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }} ./src
+        docker build --target prod -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }} .
         docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
         
     - name: Deploy to Cloud Run

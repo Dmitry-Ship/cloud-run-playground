@@ -7,4 +7,4 @@ tmp
 .gitignore
 .github
 
-**/*gin-bin
+**/*go-bin

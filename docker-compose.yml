@@ -11,12 +11,12 @@ services:
       - DB_PASSWORD
     container_name: cloud-run-api
     build:
-      context: ./src
+      context: .
       target: dev
     ports:
       - ${PORT}:${PORT}
     volumes:
-      - ./src:/app
+      - .:/app
     depends_on:
       - sql_proxy
 

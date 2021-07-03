@@ -19,7 +19,7 @@ ENV DB_PASSWORD=${DB_PASSWORD}
 # stage 2: build binary for production
 FROM base as build
 
-RUN go build -v -o main .
+RUN go build -v -o main ./cmd/server
 
 FROM alpine:latest as prod
 
@@ -32,6 +32,7 @@ CMD ["./main"]
 # stage 4: install dev dependencies 
 FROM base as dev
 
-RUN go get github.com/codegangsta/gin
+RUN go get github.com/githubnemo/CompileDaemon
 
-CMD ["gin" , "run", "main.go"]  
+ENTRYPOINT CompileDaemon --build="go build -v -o go-bin ./cmd/server/main.go" --command=./go-bin
+
