@@ -27,7 +27,7 @@ RUN apk --no-cache add ca-certificates
 
 COPY --from=build /app/main .
 
-CMD ["./main"] 
+ENTRYPOINT "./main"
 
 # stage 4: install dev dependencies 
 FROM base as dev
