@@ -20,7 +20,7 @@ func (bs *UserStorage) GetUsersByName(limit int, name string) ([]usersSearch.Use
 	}
 	users := []usersSearch.User{}
 
-	err := bs.db.Limit(limit).Where("first_name ILIKE ?", name+"%").Or("last_name ILIKE ?", name+"%").Find(&users).Error
+	err := bs.db.Limit(limit).Where("first_name ILIKE ?", name+"%").Or("last_name ILIKE ?", name+"%").Or("username ILIKE ?", name+"%").Find(&users).Error
 
 	return users, err
 }

@@ -27,7 +27,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestGetUsersByName(t *testing.T) {
-	const sqlSelectAll = `SELECT * FROM "users" WHERE first_name ILIKE $1 OR last_name ILIKE $2 LIMIT 50`
+	const sqlSelectAll = `SELECT * FROM "users" WHERE first_name ILIKE $1 OR last_name ILIKE $2 OR username ILIKE $3 LIMIT 50`
 
 	Mock.ExpectQuery(sqlSelectAll).
 		WillReturnRows(sqlmock.NewRows(nil))
@@ -41,20 +41,22 @@ func TestGetUsersByName(t *testing.T) {
 func TestCreateUser(t *testing.T) {
 
 	user := usersSearch.User{
-		ID:        1,
-		FirstName: "John",
-		LastName:  "Doe",
-		Email:     "john@doe.com",
-		Gender:    "male",
-		IPAddress: "123",
+		ID:          1,
+		FirstName:   "John",
+		LastName:    "Doe",
+		Email:       "john@doe.com",
+		Username:    "dwefrefgerf",
+		PhoneNumber: "123123123",
+		Gender:      "male",
+		IPAddress:   "123",
 	}
 
-	const sqlInsert = `INSERT INTO "users" ("first_name","last_name","email","gender","ip_address","id")
-                                        VALUES ($1,$2,$3,$4,$5,$6) RETURNING "id"`
+	const sqlInsert = `INSERT INTO "users" ("first_name","last_name","username","phone_number","email","gender","ip_address","id")
+                                        VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING "id"`
 	const newId = 1
 	Mock.ExpectBegin() // begin transaction
 	Mock.ExpectQuery(sqlInsert).
-		WithArgs(user.FirstName, user.LastName, user.Email, user.Gender, user.IPAddress, user.ID).
+		WithArgs(user.FirstName, user.LastName, user.Username, user.PhoneNumber, user.Email, user.Gender, user.IPAddress, user.ID).
 		WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(newId))
 	Mock.ExpectCommit() // commit transaction
 
