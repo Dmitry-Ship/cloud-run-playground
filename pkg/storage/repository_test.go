@@ -1,6 +1,7 @@
-package users
+package storage
 
 import (
+	"cloud-run-playground/pkg/domain/usersSearch"
 	"os"
 	"testing"
 
@@ -25,13 +26,13 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-func TestGetAllUsers(t *testing.T) {
-	const sqlSelectAll = `SELECT * FROM "users" LIMIT 50`
+func TestGetUsersByName(t *testing.T) {
+	const sqlSelectAll = `SELECT * FROM "users" WHERE first_name ILIKE $1 OR last_name ILIKE $2 LIMIT 50`
 
 	Mock.ExpectQuery(sqlSelectAll).
 		WillReturnRows(sqlmock.NewRows(nil))
 
-	result, err := Repository.GetAllUsers(0)
+	result, err := Repository.GetUsersByName(0, "John")
 
 	assert.Equal(t, nil, err, "Error occurred")
 	assert.Equal(t, 0, len(result), "The two words should be the same.")
@@ -39,7 +40,7 @@ func TestGetAllUsers(t *testing.T) {
 
 func TestCreateUser(t *testing.T) {
 
-	user := User{
+	user := usersSearch.User{
 		ID:        1,
 		FirstName: "John",
 		LastName:  "Doe",
@@ -64,7 +65,7 @@ func TestCreateUser(t *testing.T) {
 }
 
 func TestGetUserById(t *testing.T) {
-	user := User{
+	user := usersSearch.User{
 		ID:        1,
 		FirstName: "John",
 		LastName:  "Doe",

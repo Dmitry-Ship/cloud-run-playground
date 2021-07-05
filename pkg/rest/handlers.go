@@ -1,23 +1,30 @@
 package rest
 
 import (
-	"cloud-run-playground/pkg/users"
+	"cloud-run-playground/pkg/domain/usersSearch"
 	"encoding/json"
 	"net/http"
 )
 
-func HandleRequests(usersService users.Service) {
-	http.HandleFunc("/api/users", GetUsers(usersService))
+func HandleRequests(usersService usersSearch.UserService) {
+	http.HandleFunc("/api/users", SearchUsers(usersService))
 }
 
-func GetUsers(userService users.Service) func(w http.ResponseWriter, r *http.Request) {
+func SearchUsers(userService usersSearch.UserService) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != "GET" {
 			w.WriteHeader(http.StatusMethodNotAllowed)
 			return
 		}
 
-		result, err := userService.GetAllUsers(50)
+		name := r.URL.Query().Get("name")
+
+		if name == "" {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		result, err := userService.SearchByName(0, name)
 
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusNotFound)

@@ -1,4 +1,4 @@
-package users
+package usersSearch
 
 import (
 	"testing"
@@ -8,7 +8,7 @@ import (
 
 type MockRepo struct{}
 
-func (mr *MockRepo) GetAllUsers(limit int) ([]User, error) {
+func (mr *MockRepo) GetUsersByName(limit int, name string) ([]User, error) {
 	return []User{}, nil
 }
 
@@ -24,7 +24,7 @@ var mockedRepository = &MockRepo{}
 var userService = NewService(mockedRepository)
 
 func TestGetAllUsersService(t *testing.T) {
-	result, err := userService.GetAllUsers(0)
+	result, err := userService.SearchByName(0, "")
 
 	assert.Equal(t, nil, err, "Error occurred")
 	assert.Equal(t, 0, len(result), "The two users should be the same.")

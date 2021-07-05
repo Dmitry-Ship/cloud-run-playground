@@ -1,4 +1,4 @@
-package users
+package usersSearch
 
 type User struct {
 	ID        int    `json:"id"`
