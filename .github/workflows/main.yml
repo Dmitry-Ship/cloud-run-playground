@@ -10,7 +10,6 @@ env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   SERVICE: myservice
   REGION: us-central1
-  IMAGE: gcr.io/${{ secrets.GCP_PROJECT_ID }}/myservice:${{ github.sha }}
 
 jobs:
   build:
@@ -24,7 +23,7 @@ jobs:
       run: go test ./...
 
     - name: Build Container
-      run: docker build --target prod ${{ env.IMAGE }} .
+      run: docker build --target prod -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }} .
 
     - name: Setup Cloud SDK
       if: github.ref == 'refs/heads/main'
@@ -40,7 +39,7 @@ jobs:
 
     - name: Push Container
       if: github.ref == 'refs/heads/main'
-      run: docker push ${{ env.IMAGE }}
+      run: docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
         
     - name: Deploy to Cloud Run
       if: github.ref == 'refs/heads/main'
@@ -48,7 +47,7 @@ jobs:
       uses: google-github-actions/deploy-cloudrun@v0.4.0
       with:
         service: ${{ env.SERVICE }}
-        image: ${{ env.IMAGE }}
+        image: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
         region: ${{ env.REGION }}
 
     - name: Show Output
