@@ -10,7 +10,7 @@ env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   SERVICE: myservice
   REGION: us-central1
-  IMAGE: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
+  IMAGE: gcr.io/${{ secrets.GCP_PROJECT_ID }}/myservice:${{ github.sha }}
 
 jobs:
   build:
