@@ -16,6 +16,7 @@ func main() {
 	usersRepository := storage.NewUsersStorage(db)
 	usersService := usersSearch.NewService(usersRepository)
 	rest.HandleRequests(usersService)
+
 	port := os.Getenv("PORT")
 
 	fmt.Println("Listening on port " + port)

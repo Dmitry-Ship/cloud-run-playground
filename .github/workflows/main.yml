@@ -12,7 +12,8 @@ env:
   REGION: us-central1
 
 jobs:
-  deploy:
+  build:
+    name: Build and deploy
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
