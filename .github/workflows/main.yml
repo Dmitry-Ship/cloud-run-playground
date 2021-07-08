@@ -8,7 +8,7 @@ on:
 
 
 env:
-  IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}:latest
+  IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}:${{ github.run_number }}
 
 jobs:
   build:
@@ -21,6 +21,9 @@ jobs:
     - name: Run tests
       run: go test ./...
 
+    - name: Build Container
+      run: docker build --target prod -t $IMAGE_NAME .
+
     - name: Setup Cloud SDK
       uses: google-github-actions/setup-gcloud@v0.2.0
       with:
@@ -30,12 +33,6 @@ jobs:
 
     - name: Authorize Docker push
       run: gcloud auth configure-docker
-
-    - name: Build Container
-      continue-on-error: true
-      run: |-
-        docker pull $IMAGE_NAME
-        docker build --target prod -t $IMAGE_NAME .
 
     - name: Push Container
       run: docker push $IMAGE_NAME
