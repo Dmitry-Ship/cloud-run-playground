@@ -21,10 +21,10 @@ func (mr *MockRepo) GetUserById(id int) (User, error) {
 }
 
 var mockedRepository = &MockRepo{}
-var userService = NewService(mockedRepository)
+var usersService = NewService(mockedRepository)
 
 func TestGetAllUsersService(t *testing.T) {
-	result, err := userService.SearchByName(0, "")
+	result, err := usersService.SearchByName(0, "")
 
 	assert.Equal(t, nil, err, "Error occurred")
 	assert.Equal(t, 0, len(result), "The two users should be the same.")

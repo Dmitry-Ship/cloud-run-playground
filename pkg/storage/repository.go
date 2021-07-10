@@ -6,15 +6,15 @@ import (
 	"gorm.io/gorm"
 )
 
-type UserStorage struct {
+type userRepository struct {
 	db *gorm.DB
 }
 
-func NewUsersStorage(db *gorm.DB) usersSearch.UserRepository {
-	return &UserStorage{db}
+func NewUsersRepository(db *gorm.DB) usersSearch.UserRepository {
+	return &userRepository{db}
 }
 
-func (bs *UserStorage) GetUsersByName(limit int, name string) ([]usersSearch.User, error) {
+func (bs *userRepository) GetUsersByName(limit int, name string) ([]usersSearch.User, error) {
 	if limit == 0 {
 		limit = 50
 	}
@@ -25,13 +25,13 @@ func (bs *UserStorage) GetUsersByName(limit int, name string) ([]usersSearch.Use
 	return users, err
 }
 
-func (bs *UserStorage) CreateUser(user usersSearch.User) (usersSearch.User, error) {
+func (bs *userRepository) CreateUser(user usersSearch.User) (usersSearch.User, error) {
 	err := bs.db.Create(&user).Error
 
 	return user, err
 }
 
-func (bs *UserStorage) GetUserById(userId int) (usersSearch.User, error) {
+func (bs *userRepository) GetUserById(userId int) (usersSearch.User, error) {
 	user := usersSearch.User{}
 	err := bs.db.Find(&user, userId).Error
 

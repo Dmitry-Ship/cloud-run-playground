@@ -8,16 +8,16 @@ type UserService interface {
 	SearchByName(limit int, name string) ([]User, error)
 }
 
-type service struct {
-	repo UserRepository
+type userService struct {
+	usersRepo UserRepository
 }
 
-func NewService(repo UserRepository) UserService {
-	return &service{repo}
+func NewService(usersRepo UserRepository) UserService {
+	return &userService{usersRepo}
 }
 
-func (s *service) SearchByName(limit int, name string) ([]User, error) {
-	users, err := s.repo.GetUsersByName(limit, name)
+func (s *userService) SearchByName(limit int, name string) ([]User, error) {
+	users, err := s.usersRepo.GetUsersByName(limit, name)
 
 	return users, err
 }

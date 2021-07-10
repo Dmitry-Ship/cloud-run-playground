@@ -13,7 +13,7 @@ import (
 func main() {
 	db := storage.GetDatabaseConnection()
 
-	usersRepository := storage.NewUsersStorage(db)
+	usersRepository := storage.NewUsersRepository(db)
 	usersService := usersSearch.NewService(usersRepository)
 	rest.HandleRequests(usersService)
 

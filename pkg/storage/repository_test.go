@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var Repository *UserStorage
+var Repository *userRepository
 var Mock sqlmock.Sqlmock
 
 func TestMain(m *testing.M) {
@@ -22,7 +22,7 @@ func TestMain(m *testing.M) {
 		Conn: db,
 	}), &gorm.Config{})
 
-	Repository = &UserStorage{db: gdb}
+	Repository = &userRepository{db: gdb}
 	os.Exit(m.Run())
 }
 
