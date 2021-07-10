@@ -4,10 +4,12 @@ import (
 	"cloud-run-playground/pkg/domain/usersSearch"
 	"encoding/json"
 	"net/http"
+	"strconv"
 )
 
 func HandleRequests(usersService usersSearch.UserService) {
-	http.HandleFunc("/api/users", SearchUsers(usersService))
+	http.HandleFunc("/api/users/searchByName", SearchUsers(usersService))
+	http.HandleFunc("/api/users/searchById", GetUserById(usersService))
 }
 
 func SearchUsers(userService usersSearch.UserService) func(w http.ResponseWriter, r *http.Request) {
@@ -33,6 +35,35 @@ func SearchUsers(userService usersSearch.UserService) func(w http.ResponseWriter
 
 		w.Header().Set("Content-Type", "application/json")
 
+		json.NewEncoder(w).Encode(result)
+	}
+}
+
+func GetUserById(userService usersSearch.UserService) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != "GET" {
+			w.WriteHeader(http.StatusMethodNotAllowed)
+			return
+		}
+		id := r.URL.Query().Get("id")
+		if id == "" {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		idInt, err := strconv.Atoi(id)
+
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		result, err := userService.GetById(idInt)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(result)
 	}
 }
