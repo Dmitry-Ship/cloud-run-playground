@@ -37,3 +37,21 @@ func (bs *userRepository) GetUserById(userId int) (usersSearch.User, error) {
 
 	return user, err
 }
+
+func (bs *userRepository) DeleteUser(userId int) error {
+	return bs.db.Delete(usersSearch.User{}, userId).Error
+}
+
+func (bs *userRepository) GetUserByUsername(username string) (usersSearch.User, error) {
+	user := usersSearch.User{}
+	err := bs.db.Where("username = ?", username).Find(&user).Error
+
+	return user, err
+}
+
+func (bs *userRepository) GetUserByEmail(email string) (usersSearch.User, error) {
+	user := usersSearch.User{}
+	err := bs.db.Where("email = ?", email).Find(&user).Error
+
+	return user, err
+}
