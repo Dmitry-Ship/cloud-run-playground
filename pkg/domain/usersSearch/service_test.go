@@ -16,9 +16,9 @@ func (mr *MockRepo) CreateUser(user User) (User, error) {
 	return user, nil
 }
 
-func (mr *MockRepo) GetUserById(id int) (User, error) {
+func (mr *MockRepo) Find(id int) (User, error) {
 	return User{
-		ID:          1,
+		Id:          1,
 		FirstName:   "John",
 		LastName:    "Doe",
 		Email:       "john@doe",
@@ -43,7 +43,7 @@ func TestGetUserByIdService(t *testing.T) {
 	result, err := usersService.GetById(0)
 
 	expected := User{
-		ID:          1,
+		Id:          1,
 		FirstName:   "John",
 		LastName:    "Doe",
 		Email:       "john@doe",

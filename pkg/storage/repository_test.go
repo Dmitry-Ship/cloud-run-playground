@@ -41,7 +41,7 @@ func TestGetUsersByName(t *testing.T) {
 func TestCreateUser(t *testing.T) {
 
 	user := usersSearch.User{
-		ID:          1,
+		Id:          1,
 		FirstName:   "John",
 		LastName:    "Doe",
 		Email:       "john@doe.com",
@@ -56,19 +56,19 @@ func TestCreateUser(t *testing.T) {
 	const newId = 1
 	Mock.ExpectBegin() // begin transaction
 	Mock.ExpectQuery(sqlInsert).
-		WithArgs(user.FirstName, user.LastName, user.Username, user.PhoneNumber, user.Email, user.Gender, user.IPAddress, user.ID).
+		WithArgs(user.FirstName, user.LastName, user.Username, user.PhoneNumber, user.Email, user.Gender, user.IPAddress, user.Id).
 		WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(newId))
 	Mock.ExpectCommit() // commit transaction
 
-	result, err := Repository.CreateUser(user)
+	result, err := Repository.Store(user)
 
 	assert.Equal(t, nil, err, "Error occurred")
 	assert.Equal(t, user, result, "The two words should be the same.")
 }
 
-func TestGetUserById(t *testing.T) {
+func TestFind(t *testing.T) {
 	user := usersSearch.User{
-		ID:        1,
+		Id:        1,
 		FirstName: "John",
 		LastName:  "Doe",
 		Email:     "john@doe.com",
@@ -78,12 +78,12 @@ func TestGetUserById(t *testing.T) {
 
 	rows := sqlmock.
 		NewRows([]string{"id", "first_name", "last_name", "email", "gender", "ip_address"}).
-		AddRow(user.ID, user.FirstName, user.LastName, user.Email, user.Gender, user.IPAddress)
+		AddRow(user.Id, user.FirstName, user.LastName, user.Email, user.Gender, user.IPAddress)
 
 	const sqlSelectOne = `SELECT * FROM "users" WHERE "users"."id" = $1`
-	Mock.ExpectQuery(sqlSelectOne).WithArgs(user.ID).WillReturnRows(rows)
+	Mock.ExpectQuery(sqlSelectOne).WithArgs(user.Id).WillReturnRows(rows)
 
-	result, err := Repository.GetUserById(user.ID)
+	result, err := Repository.Find(user.Id)
 
 	assert.Equal(t, nil, err, "Error occurred")
 	assert.Equal(t, user, result, "The two users should be the same.")

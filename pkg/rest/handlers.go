@@ -35,7 +35,13 @@ func SearchUsers(userService usersSearch.UserService) func(w http.ResponseWriter
 
 		w.Header().Set("Content-Type", "application/json")
 
-		json.NewEncoder(w).Encode(result)
+		response := struct {
+			Users []usersSearch.User `json:"users"`
+		}{
+			Users: result,
+		}
+
+		json.NewEncoder(w).Encode(response)
 	}
 }
 
@@ -64,6 +70,13 @@ func GetUserById(userService usersSearch.UserService) func(w http.ResponseWriter
 			return
 		}
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(result)
+
+		var response = struct {
+			User usersSearch.User `json:"user"`
+		}{
+			User: result,
+		}
+
+		json.NewEncoder(w).Encode(response)
 	}
 }

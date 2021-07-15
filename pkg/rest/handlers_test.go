@@ -19,7 +19,7 @@ func (mr *MockService) SearchByName(limit int, name string) ([]usersSearch.User,
 
 func (mr *MockService) GetById(id int) (usersSearch.User, error) {
 	return usersSearch.User{
-		ID:          1,
+		Id:          1,
 		FirstName:   "John",
 		LastName:    "Doe",
 		Email:       "john@doe",
@@ -45,7 +45,7 @@ func TestSearchUsers(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 
 	assert.Equal(t, http.StatusOK, rr.Code, "handler returned wrong status code")
-	assert.Equal(t, "[]", strings.TrimSpace(rr.Body.String()), "handler returned unexpected body")
+	assert.Equal(t, `{"users":[]}`, strings.TrimSpace(rr.Body.String()), "handler returned unexpected body")
 }
 
 func TestGetUserById(t *testing.T) {
@@ -60,15 +60,19 @@ func TestGetUserById(t *testing.T) {
 
 	handler.ServeHTTP(rr, req)
 
-	user := usersSearch.User{
-		ID:          1,
-		FirstName:   "John",
-		LastName:    "Doe",
-		Email:       "john@doe",
-		Username:    "john",
-		PhoneNumber: "+1-555-555-5555",
-		IPAddress:   "127.0.0.1",
-		Gender:      "male",
+	user := struct {
+		User usersSearch.User `json:"user"`
+	}{
+		User: usersSearch.User{
+			Id:          1,
+			FirstName:   "John",
+			LastName:    "Doe",
+			Email:       "john@doe",
+			Username:    "john",
+			PhoneNumber: "+1-555-555-5555",
+			IPAddress:   "127.0.0.1",
+			Gender:      "male",
+		},
 	}
 
 	b, _ := json.Marshal(user)

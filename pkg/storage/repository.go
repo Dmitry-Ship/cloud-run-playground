@@ -25,13 +25,13 @@ func (bs *userRepository) GetUsersByName(limit int, name string) ([]usersSearch.
 	return users, err
 }
 
-func (bs *userRepository) CreateUser(user usersSearch.User) (usersSearch.User, error) {
+func (bs *userRepository) Store(user usersSearch.User) (usersSearch.User, error) {
 	err := bs.db.Create(&user).Error
 
 	return user, err
 }
 
-func (bs *userRepository) GetUserById(userId int) (usersSearch.User, error) {
+func (bs *userRepository) Find(userId int) (usersSearch.User, error) {
 	user := usersSearch.User{}
 	err := bs.db.Find(&user, userId).Error
 
