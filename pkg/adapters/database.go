@@ -1,6 +1,7 @@
-package storage
+package adapters
 
 import (
+	"cloud-run-playground/pkg/domain"
 	"fmt"
 	"os"
 
@@ -24,7 +25,7 @@ func GetDatabaseConnection() *gorm.DB {
 	fmt.Printf("Connected to database %s", dbname)
 
 	// Migrate the schema
-	// db.AutoMigrate(&users.User{})
+	db.AutoMigrate(&domain.User{})
 
 	return db
 }

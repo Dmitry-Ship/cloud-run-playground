@@ -1,7 +1,7 @@
-package rest
+package ports
 
 import (
-	"cloud-run-playground/pkg/domain/usersSearch"
+	"cloud-run-playground/pkg/domain"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -13,12 +13,12 @@ import (
 
 type MockService struct{}
 
-func (mr *MockService) SearchByName(limit int, name string) ([]usersSearch.User, error) {
-	return []usersSearch.User{}, nil
+func (mr *MockService) SearchByName(limit int, name string) ([]domain.User, error) {
+	return []domain.User{}, nil
 }
 
-func (mr *MockService) GetById(id int) (usersSearch.User, error) {
-	return usersSearch.User{
+func (mr *MockService) GetById(id int) (domain.User, error) {
+	return domain.User{
 		Id:          1,
 		FirstName:   "John",
 		LastName:    "Doe",
@@ -61,9 +61,9 @@ func TestGetUserById(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 
 	user := struct {
-		User usersSearch.User `json:"user"`
+		User domain.User `json:"user"`
 	}{
-		User: usersSearch.User{
+		User: domain.User{
 			Id:          1,
 			FirstName:   "John",
 			LastName:    "Doe",

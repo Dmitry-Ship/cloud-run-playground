@@ -1,6 +1,7 @@
 package usersSearch
 
 import (
+	"cloud-run-playground/pkg/domain"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -8,16 +9,16 @@ import (
 
 type MockRepo struct{}
 
-func (mr *MockRepo) GetUsersByName(limit int, name string) ([]User, error) {
-	return []User{}, nil
+func (mr *MockRepo) GetUsersByName(limit int, name string) ([]domain.User, error) {
+	return []domain.User{}, nil
 }
 
-func (mr *MockRepo) CreateUser(user User) (User, error) {
+func (mr *MockRepo) CreateUser(user domain.User) (domain.User, error) {
 	return user, nil
 }
 
-func (mr *MockRepo) Find(id int) (User, error) {
-	return User{
+func (mr *MockRepo) Find(id int) (domain.User, error) {
+	return domain.User{
 		Id:          1,
 		FirstName:   "John",
 		LastName:    "Doe",
@@ -42,7 +43,7 @@ func TestGetAllUsersService(t *testing.T) {
 func TestGetUserByIdService(t *testing.T) {
 	result, err := usersService.GetById(0)
 
-	expected := User{
+	expected := domain.User{
 		Id:          1,
 		FirstName:   "John",
 		LastName:    "Doe",

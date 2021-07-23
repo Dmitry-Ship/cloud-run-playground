@@ -1,7 +1,7 @@
-package storage
+package adapters
 
 import (
-	"cloud-run-playground/pkg/domain/usersSearch"
+	"cloud-run-playground/pkg/domain"
 	"os"
 	"testing"
 
@@ -40,7 +40,7 @@ func TestGetUsersByName(t *testing.T) {
 
 func TestCreateUser(t *testing.T) {
 
-	user := usersSearch.User{
+	user := domain.User{
 		Id:          1,
 		FirstName:   "John",
 		LastName:    "Doe",
@@ -67,7 +67,7 @@ func TestCreateUser(t *testing.T) {
 }
 
 func TestFind(t *testing.T) {
-	user := usersSearch.User{
+	user := domain.User{
 		Id:        1,
 		FirstName: "John",
 		LastName:  "Doe",

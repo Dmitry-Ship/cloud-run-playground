@@ -1,7 +1,8 @@
-package rest
+package ports
 
 import (
-	"cloud-run-playground/pkg/domain/usersSearch"
+	"cloud-run-playground/pkg/application/usersSearch"
+	"cloud-run-playground/pkg/domain"
 	"encoding/json"
 	"net/http"
 	"strconv"
@@ -36,7 +37,7 @@ func SearchUsers(userService usersSearch.UserService) func(w http.ResponseWriter
 		w.Header().Set("Content-Type", "application/json")
 
 		response := struct {
-			Users []usersSearch.User `json:"users"`
+			Users []domain.User `json:"users"`
 		}{
 			Users: result,
 		}
@@ -72,7 +73,7 @@ func GetUserById(userService usersSearch.UserService) func(w http.ResponseWriter
 		w.Header().Set("Content-Type", "application/json")
 
 		var response = struct {
-			User usersSearch.User `json:"user"`
+			User domain.User `json:"user"`
 		}{
 			User: result,
 		}

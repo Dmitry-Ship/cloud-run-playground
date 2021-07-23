@@ -1,9 +1,9 @@
 package main
 
 import (
-	"cloud-run-playground/pkg/domain/usersSearch"
-	"cloud-run-playground/pkg/rest"
-	"cloud-run-playground/pkg/storage"
+	"cloud-run-playground/pkg/adapters"
+	"cloud-run-playground/pkg/application/usersSearch"
+	"cloud-run-playground/pkg/ports"
 	"fmt"
 	"log"
 	"net/http"
@@ -11,11 +11,11 @@ import (
 )
 
 func main() {
-	db := storage.GetDatabaseConnection()
+	db := adapters.GetDatabaseConnection()
 
-	usersRepository := storage.NewUsersRepository(db)
+	usersRepository := adapters.NewUsersRepository(db)
 	usersService := usersSearch.NewService(usersRepository)
-	rest.HandleRequests(usersService)
+	ports.HandleRequests(usersService)
 
 	port := os.Getenv("PORT")
 
