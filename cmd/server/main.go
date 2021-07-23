@@ -3,6 +3,7 @@ package main
 import (
 	"cloud-run-playground/pkg/adapters"
 	"cloud-run-playground/pkg/application/usersSearch"
+	"cloud-run-playground/pkg/persistance"
 	"cloud-run-playground/pkg/ports"
 	"fmt"
 	"log"
@@ -11,7 +12,7 @@ import (
 )
 
 func main() {
-	db := adapters.GetDatabaseConnection()
+	db := persistance.GetDatabaseConnection()
 
 	usersRepository := adapters.NewUsersRepository(db)
 	usersService := usersSearch.NewService(usersRepository)
