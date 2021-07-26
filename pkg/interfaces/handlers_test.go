@@ -1,4 +1,4 @@
-package ports
+package interfaces
 
 import (
 	"cloud-run-playground/pkg/domain"

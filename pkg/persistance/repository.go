@@ -1,4 +1,4 @@
-package adapters
+package persistance
 
 import (
 	"cloud-run-playground/pkg/domain"
