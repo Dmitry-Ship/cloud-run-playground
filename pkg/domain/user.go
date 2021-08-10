@@ -11,7 +11,7 @@ type User struct {
 	IPAddress   string `json:"id_address"`
 }
 
-func (user *User) NewUser(u *User) User {
+func (user User) NewUser(u User) User {
 	return User{
 		FirstName:   u.FirstName,
 		LastName:    u.LastName,
