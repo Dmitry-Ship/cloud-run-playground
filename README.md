@@ -5,5 +5,5 @@
 Repo for playing around with google cloud run service
 
 ## Enpoints
-https://myservice-23rpzgbtta-uc.a.run.app/api/users/searchByName
-https://myservice-23rpzgbtta-uc.a.run.app/api/users/searchById
+- https://myservice-23rpzgbtta-uc.a.run.app/api/users/searchByName 
+- https://myservice-23rpzgbtta-uc.a.run.app/api/users/searchById
