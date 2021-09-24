@@ -3,7 +3,7 @@ version: "3.8"
 services:
   app:
     environment:
-      - PORT=${PORT}
+      - PORT
       - DB_PORT
       - DB_HOST
       - DB_NAME
@@ -35,7 +35,7 @@ services:
     user: root
     volumes:
       - ${GCP_KEY_PATH}:/tmp/keys/keyfile.json:ro
-      # - cloudsql:/cloudsql
+  # - cloudsql:/cloudsql
 volumes:
   # This empty property initializes a named volume.
   database:

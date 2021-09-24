@@ -9,13 +9,6 @@ RUN go mod download
 
 COPY . .
 
-ENV PORT=${PORT}
-ENV DB_PORT=${DB_PORT}
-ENV DB_HOST=${DB_HOST}
-ENV DB_NAME=${DB_NAME}
-ENV DB_USER=${DB_USER}
-ENV DB_PASSWORD=${DB_PASSWORD}
-
 # stage 2: build binary for production
 FROM base as build
 
@@ -29,7 +22,7 @@ COPY --from=build /app/main .
 
 ENTRYPOINT "./main"
 
-# stage 4: install dev dependencies 
+# stage 3: install dev dependencies 
 FROM base as dev
 
 RUN go get github.com/githubnemo/CompileDaemon
